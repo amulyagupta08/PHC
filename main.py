@@ -37,10 +37,10 @@ app = Flask(__name__)
 app.secret_key = "change-this-to-something-random"
 
 con = sql.connect(
-    host=DB_HOST,
-    user=DB_USER,
-    passwd=DB_PASSWORD,
-    database=DB_NAME,
+    host="localhost",
+    user="root",
+    passwd="hello123*",
+    database="phc_fake",
     auth_plugin="mysql_native_password"
 )
 
