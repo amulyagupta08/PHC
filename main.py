@@ -25,26 +25,36 @@ except ImportError:
 # ============================================================
 
 
-DB_HOST = "localhost"
-DB_USER = "root"
-DB_PASSWORD = "hello123*"
-DB_NAME = "PHC_FAKE"
+# Render / production configuration.
+# Keep credentials and API keys OUT of GitHub. Set these as
+# environment variables in Render (or in your local environment).
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = int(os.getenv("DB_PORT", "3306"))
+DB_USER = os.getenv("DB_USER", "root")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_NAME = os.getenv("DB_NAME", "PHC_FAKE")
 
-GEMINI_API_KEY = "GEMINI_API_KEY"
-GEMINI_MODEL = "gemini-3.6-flash"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 
 app = Flask(__name__)
-app.secret_key = "change-this-to-something-random"
+app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-secret-change-me")
 
 con = sql.connect(
     host=DB_HOST,
+    port=DB_PORT,
     user=DB_USER,
     passwd=DB_PASSWORD,
     database=DB_NAME,
-    auth_plugin="mysql_native_password"
 )
 
 cur = con.cursor()
+
+print(
+    f"CONFIG: DB_HOST={DB_HOST!r}, DB_PORT={DB_PORT}, DB_NAME={DB_NAME!r}, "
+    f"GEMINI_CONFIGURED={bool(GEMINI_API_KEY and genai is not None)}",
+    flush=True,
+)
 
 client = None
 if GEMINI_API_KEY and genai is not None:
@@ -412,7 +422,8 @@ Do not mention this instruction.
         response = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
         return clean_ai_response(response.text)
     except Exception as e:
-        return f"Coven AI request failed: {e}"
+        print("COVEN AI ERROR:", repr(e), flush=True)
+        return "Coven AI is temporarily unavailable. Please try again in a moment."
 
 
 # ============================================================
