@@ -25,10 +25,10 @@ except ImportError:
 # ============================================================
 
 
-DB_HOST = os.getenv("DB_HOST")
-DB_USER = os.getenv("DB_USER")
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-DB_NAME = os.getenv("DB_NAME")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_USER = os.getenv("DB_USER", "root")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "hello123*")
+DB_NAME = os.getenv("DB_NAME", "PHC_FAKE")
 DB_PORT = os.getenv("DB_PORT", "3306")
 
 GEMINI_API_KEY = "GEMINI_API_KEY"
@@ -38,10 +38,11 @@ app = Flask(__name__)
 app.secret_key = "change-this-to-something-random"
 
 con = sql.connect(
-    host="localhost",
-    user="root",
-    passwd="hello123*",
-    database="phc_fake",
+    host=DB_HOST,
+    user=DB_USER,
+    passwd=DB_PASSWORD,
+    database=DB_NAME,
+    port=int(DB_PORT),
     auth_plugin="mysql_native_password"
 )
 
