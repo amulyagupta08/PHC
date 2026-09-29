@@ -25,11 +25,10 @@ except ImportError:
 # ============================================================
 
 
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_USER = os.getenv("DB_USER", "root")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "hello123*")
-DB_NAME = os.getenv("DB_NAME", "PHC_FAKE")
-DB_PORT = os.getenv("DB_PORT", "3306")
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = "hello123*"
+DB_NAME = "PHC_FAKE"
 
 GEMINI_API_KEY = "GEMINI_API_KEY"
 GEMINI_MODEL = "gemini-3.6-flash"
@@ -42,7 +41,6 @@ con = sql.connect(
     user=DB_USER,
     passwd=DB_PASSWORD,
     database=DB_NAME,
-    port=int(DB_PORT),
     auth_plugin="mysql_native_password"
 )
 
