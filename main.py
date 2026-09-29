@@ -30,7 +30,7 @@ DB_USER = "root"
 DB_PASSWORD = "hello123*"
 DB_NAME = "PHC_FAKE"
 
-GEMINI_API_KEY = "AQ.Ab8RN6InKOVE2zLk9nZWAXkMHXICP7N-uh4dbf_Y3vbdfFQrUg"
+GEMINI_API_KEY = "GEMINI_API_KEY"
 GEMINI_MODEL = "gemini-3.6-flash"
 
 app = Flask(__name__)
