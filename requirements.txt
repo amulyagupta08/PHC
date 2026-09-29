@@ -3,3 +3,4 @@ mysql-connector-python
 Werkzeug
 matplotlib
 google-genai
+gunicorn
